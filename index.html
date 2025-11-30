@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playwright Practice Site</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f8;
+        padding: 20px;
+      }
+      h2 {
+        color: #764ba2;
+        margin-top: 30px;
+      }
+      form,
+      .section {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+      input,
+      button {
+        display: block;
+        margin: 10px 0;
+        padding: 10px;
+        width: 100%;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+      }
+      button {
+        background: #764ba2;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      button:hover {
+        background: #667eea;
+      }
+      .product-item {
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Login Form</h2>
+    <form>
+      <label for="username">Username</label>
+      <input id="username" type="text" aria-label="Username" placeholder="Username" />
+
+      <label for="password">Password</label>
+      <input id="password" type="password" aria-label="Password" placeholder="Password" />
+
+      <button type="submit">Login</button>
+    </form>
+
+    <h2>Buttons and Text</h2>
+    <div class="section">
+      <button>Welcome</button>
+      <p>Playwright is awesome!</p>
+    </div>
+
+    <h2>Form with Labels</h2>
+    <form>
+      <label for="email">Email</label>
+      <input id="email" type="email" />
+
+      <label for="pass">Password</label>
+      <input id="pass" type="password" />
+    </form>
+
+    <h2>Search Box with Placeholder</h2>
+    <div class="section">
+      <input type="text" placeholder="Search..." />
+    </div>
+
+    <h2>Button with data-testid</h2>
+    <div class="section">
+      <button data-testid="submit-button">Submit</button>
+    </div>
+
+    <h2>Product List for Advanced Locators</h2>
+    <div class="section cart">
+      <div class="product-item">Laptop</div>
+      <div class="product-item">Phone</div>
+      <div class="product-item">Tablet</div>
+      <button class="add">Add to Cart</button>
+    </div>
+  </body>
+</html>
