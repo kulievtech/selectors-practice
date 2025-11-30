@@ -18,7 +18,7 @@
       }
       .container {
         width: 100%;
-        max-width: 800px;
+        max-width: 900px;
       }
       h2 {
         color: #5a2d82;
@@ -160,8 +160,10 @@
         color: white;
         padding: 10px;
         border-radius: 6px;
-        top: 100%;
+        top: 35px;
         left: 0;
+        cursor: pointer;
+        z-index: 10;
       }
       .menu:hover .submenu {
         display: block;
@@ -170,36 +172,50 @@
       .dropzone {
         width: 60px;
         height: 60px;
-        margin: 10px 0;
         display: inline-block;
         text-align: center;
         line-height: 60px;
         color: white;
         border-radius: 6px;
         cursor: grab;
+        user-select: none;
+        margin: 5px;
       }
       .draggable {
         background: #e74c3c;
       }
       .dropzone {
         background: #f1c40f;
-      }
-      .mouse-box {
+        line-height: 100px;
         width: 100px;
         height: 100px;
+      }
+      .mouse-box {
+        width: 60px;
+        height: 60px;
         background: #3498db;
         color: white;
-        line-height: 100px;
+        line-height: 60px;
         text-align: center;
         border-radius: 8px;
         margin-bottom: 10px;
+        cursor: grab;
+        display: inline-block;
       }
       .output {
         margin-top: 10px;
         font-weight: bold;
         color: #333;
       }
-      @media (max-width: 800px) {
+      #searchOptions li {
+        padding: 5px;
+        cursor: pointer;
+      }
+      #searchOptions li:hover {
+        background: #764ba2;
+        color: white;
+      }
+      @media (max-width: 900px) {
         form,
         .section {
           padding: 20px;
@@ -237,11 +253,7 @@
       <!-- Text Section -->
       <h2>Text Section</h2>
       <div class="section">
-        <p id="textParagraph">
-          This is a sample text. Click the button below to change it.
-        </p>
-        <button id="changeTextBtn">Change Text</button>
-        <div class="output" id="textOutput"></div>
+        <p id="textParagraph">This is a sample text for Playwright assertions.</p>
       </div>
 
       <!-- Form with Labels -->
@@ -328,250 +340,285 @@
 
       <!-- Hover Menu -->
       <h2>Hover Menu</h2>
-      <div class="section">
-        <div class="menu">
-          Hover Me
-          <div class="submenu">Submenu Item</div>
+      <div class="section" style="position: relative">
+        <div style="display: flex; align-items: center; gap: 10px">
+          <div
+            class="menu"
+            style="
+              display: inline-block;
+              padding: 10px;
+              background: #764ba2;
+              color: white;
+              border-radius: 6px;
+              cursor: pointer;
+            "
+          >
+            Hover Me
+            <div class="submenu" id="submenuItem">Click Me</div>
+          </div>
+          <div class="output" id="hoverOutput">Hover to reveal submenu</div>
         </div>
-        <div class="output" id="hoverOutput">Hover to see submenu</div>
-      </div>
-
-      <!-- Drag & Drop -->
-      <h2>Drag & Drop</h2>
-      <div class="section">
-        <div class="draggable" id="dragItem" draggable="true">Drag Me</div>
-        <div class="dropzone" id="dropArea">Drop Here</div>
-        <div class="output" id="dragOutput"></div>
       </div>
 
       <!-- Mouse Actions -->
       <h2>Mouse Actions</h2>
       <div class="section">
-        <div class="mouse-box" id="mouseBox">Hover or Click</div>
-        <button id="mouseClickBtn">Click Me</button>
+        <div style="margin-bottom: 10px">
+          <div class="mouse-box" id="mouseBox">Drag Me</div>
+          <div class="dropzone" id="dropZone">Drop Here</div>
+        </div>
+        <div style="margin-top: 10px">
+          <button id="mouseMoveBtn">Move Mouse</button>
+          <button id="mouseClickBtn">Click Mouse</button>
+          <button id="mouseDownUpBtn">Mouse Down/Up</button>
+          <button id="mouseWheelBtn">Scroll Wheel</button>
+        </div>
         <div class="output" id="mouseOutput">No action yet</div>
+      </div>
+
+      <!-- Drag & Drop -->
+      <h2>Drag & Drop</h2>
+      <div class="section">
+        <div id="dragItem" class="draggable">Drag Me</div>
+        <div id="dropArea" class="dropzone">Drop Here</div>
+        <div class="output" id="dragOutput"></div>
       </div>
 
       <!-- Keyboard Actions -->
       <h2>Keyboard Actions</h2>
       <div class="section">
         <input type="text" id="keyboardInput" placeholder="Type something..." />
-        <button id="keyboardShiftBtn">Shift + Type</button>
         <div class="output" id="keyboardOutput">Typed text will appear here</div>
       </div>
-    </div>
 
-    <script>
-      // Login Form
-      const loginForm = document.getElementById("loginForm");
-      const loginMessage = document.getElementById("loginMessage");
-      loginForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-        const country = document.getElementById("country").value;
-        const remember = document.getElementById("rememberMe").checked;
-        loginMessage.textContent =
-          username && password
-            ? `Logged in as ${username} from ${country} ${
-                remember ? "(Remember Me checked)" : ""
-              }`
-            : "Please enter username and password";
-      });
+      <script>
+        /* Login Form */
+        const loginForm = document.getElementById("loginForm");
+        const loginMessage = document.getElementById("loginMessage");
+        loginForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+          const country = document.getElementById("country").value;
+          const remember = document.getElementById("rememberMe").checked;
+          loginMessage.textContent =
+            username && password
+              ? `Logged in as ${username} from ${country} ${
+                  remember ? "(Remember Me checked)" : ""
+                }`
+              : "Please enter username and password";
+        });
 
-      // Buttons
-      const btnOutput = document.getElementById("buttonOutput");
-      document
-        .getElementById("btnClick")
-        .addEventListener(
+        /* Buttons */
+        const btnOutput = document.getElementById("buttonOutput");
+        document
+          .getElementById("btnClick")
+          .addEventListener(
+            "click",
+            () => (btnOutput.textContent = "Click button clicked")
+          );
+        document
+          .getElementById("btnDoubleClick")
+          .addEventListener(
+            "dblclick",
+            () => (btnOutput.textContent = "Double click detected")
+          );
+        document.getElementById("btnRightClick").addEventListener("contextmenu", (e) => {
+          e.preventDefault();
+          btnOutput.textContent = "Right click detected";
+        });
+
+        /* Form with Labels */
+        const labelForm = document.getElementById("labelForm");
+        const labelFormOutput = document.getElementById("labelFormOutput");
+        labelForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const email = document.getElementById("email").value;
+          const pass = document.getElementById("pass").value;
+          labelFormOutput.textContent =
+            email && pass
+              ? `Form submitted with email: ${email}`
+              : "Please fill both fields";
+        });
+
+        /* Search Box */
+        const searchBox = document.getElementById("searchBox");
+        const searchOptions = Array.from(document.querySelectorAll("#searchOptions li"));
+        const searchOutput = document.getElementById("searchOutput");
+        searchBox.addEventListener("input", () => {
+          const term = searchBox.value.toLowerCase();
+          searchOptions.forEach(
+            (li) =>
+              (li.style.display = li.textContent.toLowerCase().includes(term)
+                ? ""
+                : "none")
+          );
+          searchOutput.textContent = term ? `Filtering for: ${term}` : "";
+        });
+
+        /* Checkboxes */
+        const checkboxOutput = document.getElementById("checkboxOutput");
+        const checkboxes = document.querySelectorAll(".checkbox-group input");
+        checkboxes.forEach((c) =>
+          c.addEventListener("change", () => {
+            const selected = Array.from(checkboxes)
+              .filter((c) => c.checked)
+              .map((c) => c.value);
+            checkboxOutput.textContent = `Checked: ${
+              selected.length ? selected.join(", ") : "None"
+            }`;
+          })
+        );
+
+        /* Radio Buttons */
+        const radioOutput = document.getElementById("radioOutput");
+        const radios = document.querySelectorAll(".radio-group input");
+        radios.forEach((r) =>
+          r.addEventListener("change", () => {
+            const selected = Array.from(radios).find((r) => r.checked);
+            radioOutput.textContent = `Selected: ${selected ? selected.value : "None"}`;
+          })
+        );
+
+        /* Toggle Switch */
+        const toggleSwitch = document.getElementById("toggleSwitch");
+        const toggleOutput = document.getElementById("toggleOutput");
+        toggleSwitch.addEventListener(
+          "change",
+          () =>
+            (toggleOutput.textContent = `Toggle is ${
+              toggleSwitch.checked ? "ON" : "OFF"
+            }`)
+        );
+
+        /* Textarea */
+        const textarea = document.getElementById("textArea");
+        const textareaOutput = document.getElementById("textareaOutput");
+        textarea.addEventListener(
+          "input",
+          () => (textareaOutput.textContent = `Typed text: ${textarea.value}`)
+        );
+
+        /* Button with data-testid */
+        const testIdButton = document.getElementById("testIdButton");
+        const testIdOutput = document.getElementById("testIdOutput");
+        testIdButton.addEventListener(
           "click",
-          () => (btnOutput.textContent = "Click button clicked")
-        );
-      document
-        .getElementById("btnDoubleClick")
-        .addEventListener(
-          "dblclick",
-          () => (btnOutput.textContent = "Double click detected")
-        );
-      document.getElementById("btnRightClick").addEventListener("contextmenu", (e) => {
-        e.preventDefault();
-        btnOutput.textContent = "Right click detected";
-      });
-
-      // Text Section
-      const textParagraph = document.getElementById("textParagraph");
-      const changeTextBtn = document.getElementById("changeTextBtn");
-      const textOutput = document.getElementById("textOutput");
-      changeTextBtn.addEventListener("click", () => {
-        textParagraph.textContent = "The text has been updated!";
-        textOutput.textContent = "Text changed successfully.";
-      });
-
-      // Form with Labels
-      const labelForm = document.getElementById("labelForm");
-      const labelFormOutput = document.getElementById("labelFormOutput");
-      labelForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const email = document.getElementById("email").value;
-        const pass = document.getElementById("pass").value;
-        labelFormOutput.textContent =
-          email && pass
-            ? `Form submitted with email: ${email}`
-            : "Please fill both fields";
-      });
-
-      // Search Box
-      const searchBox = document.getElementById("searchBox");
-      const searchOptions = Array.from(document.querySelectorAll("#searchOptions li"));
-      const searchOutput = document.getElementById("searchOutput");
-      searchBox.addEventListener("input", () => {
-        const term = searchBox.value.toLowerCase();
-        searchOptions.forEach(
-          (li) =>
-            (li.style.display = li.textContent.toLowerCase().includes(term) ? "" : "none")
-        );
-        searchOutput.textContent = term ? `Filtering for: ${term}` : "";
-      });
-
-      // Checkboxes
-      const checkboxOutput = document.getElementById("checkboxOutput");
-      const checkboxes = document.querySelectorAll(".checkbox-group input");
-      checkboxes.forEach((c) =>
-        c.addEventListener("change", () => {
-          const selected = Array.from(checkboxes)
-            .filter((c) => c.checked)
-            .map((c) => c.value);
-          checkboxOutput.textContent = `Checked: ${
-            selected.length ? selected.join(", ") : "None"
-          }`;
-        })
-      );
-
-      // Radio Buttons
-      const radioOutput = document.getElementById("radioOutput");
-      const radios = document.querySelectorAll(".radio-group input");
-      radios.forEach((r) =>
-        r.addEventListener("change", () => {
-          const selected = Array.from(radios).find((r) => r.checked);
-          radioOutput.textContent = `Selected: ${selected ? selected.value : "None"}`;
-        })
-      );
-
-      // Toggle Switch
-      const toggleSwitch = document.getElementById("toggleSwitch");
-      const toggleOutput = document.getElementById("toggleOutput");
-      toggleSwitch.addEventListener(
-        "change",
-        () =>
-          (toggleOutput.textContent = `Toggle is ${toggleSwitch.checked ? "ON" : "OFF"}`)
-      );
-
-      // Textarea
-      const textarea = document.getElementById("textArea");
-      const textareaOutput = document.getElementById("textareaOutput");
-      textarea.addEventListener(
-        "input",
-        () => (textareaOutput.textContent = `Typed text: ${textarea.value}`)
-      );
-
-      // Button with data-testid
-      const testIdButton = document.getElementById("testIdButton");
-      const testIdOutput = document.getElementById("testIdOutput");
-      testIdButton.addEventListener(
-        "click",
-        () => (testIdOutput.textContent = "Data-testid button clicked")
-      );
-
-      // Product list
-      const products = document.querySelectorAll(".product-item");
-      const selectedProducts = document.getElementById("selectedProducts");
-      products.forEach((item) =>
-        item.addEventListener("click", () => {
-          item.classList.toggle("selected");
-          const selected = Array.from(
-            document.querySelectorAll(".product-item.selected")
-          ).map((i) => i.textContent);
-          selectedProducts.textContent = selected.length
-            ? `Selected products: ${selected.join(", ")}`
-            : "No products selected";
-        })
-      );
-      const productSearch = document.getElementById("productSearch");
-      productSearch.addEventListener("input", () => {
-        const term = productSearch.value.toLowerCase();
-        products.forEach(
-          (p) =>
-            (p.style.display = p.textContent.toLowerCase().includes(term) ? "" : "none")
-        );
-      });
-
-      // Hover menu
-      const hoverOutput = document.getElementById("hoverOutput");
-      document
-        .querySelector(".menu")
-        .addEventListener(
-          "mouseenter",
-          () => (hoverOutput.textContent = "Submenu visible")
-        );
-      document
-        .querySelector(".menu")
-        .addEventListener(
-          "mouseleave",
-          () => (hoverOutput.textContent = "Hover to see submenu")
+          () => (testIdOutput.textContent = "Data-testid button clicked")
         );
 
-      // Drag & Drop
-      const dragItem = document.getElementById("dragItem");
-      const dropArea = document.getElementById("dropArea");
-      const dragOutput = document.getElementById("dragOutput");
-      dragItem.addEventListener("dragstart", (e) =>
-        e.dataTransfer.setData("text/plain", dragItem.textContent)
-      );
-      dropArea.addEventListener("dragover", (e) => e.preventDefault());
-      dropArea.addEventListener("drop", (e) => {
-        e.preventDefault();
-        const data = e.dataTransfer.getData("text/plain");
-        dragOutput.textContent = `${data} dropped into the drop zone`;
-      });
+        /* Product List */
+        const products = document.querySelectorAll(".product-item");
+        const selectedProducts = document.getElementById("selectedProducts");
+        products.forEach((item) =>
+          item.addEventListener("click", () => {
+            item.classList.toggle("selected");
+            const selected = Array.from(
+              document.querySelectorAll(".product-item.selected")
+            ).map((i) => i.textContent);
+            selectedProducts.textContent = selected.length
+              ? `Selected products: ${selected.join(", ")}`
+              : "No products selected";
+          })
+        );
+        const productSearch = document.getElementById("productSearch");
+        productSearch.addEventListener("input", () => {
+          const term = productSearch.value.toLowerCase();
+          products.forEach(
+            (p) =>
+              (p.style.display = p.textContent.toLowerCase().includes(term) ? "" : "none")
+          );
+        });
 
-      // Mouse Actions
-      const mouseBox = document.getElementById("mouseBox");
-      const mouseClickBtn = document.getElementById("mouseClickBtn");
-      const mouseOutput = document.getElementById("mouseOutput");
-      mouseBox.addEventListener(
-        "mouseenter",
-        () => (mouseOutput.textContent = "Mouse hovered over box")
-      );
-      mouseBox.addEventListener(
-        "mouseleave",
-        () => (mouseOutput.textContent = "Mouse left the box")
-      );
-      mouseClickBtn.addEventListener(
-        "click",
-        () => (mouseOutput.textContent = "Mouse button clicked")
-      );
-      mouseBox.addEventListener(
-        "dblclick",
-        () => (mouseOutput.textContent = "Mouse double-clicked")
-      );
-      mouseBox.addEventListener("contextmenu", (e) => {
-        e.preventDefault();
-        mouseOutput.textContent = "Right click detected";
-      });
+        /* Hover Menu */
+        const hoverOutput = document.getElementById("hoverOutput");
+        const submenuItem = document.getElementById("submenuItem");
+        submenuItem.addEventListener(
+          "click",
+          () => (hoverOutput.textContent = "Submenu clicked!")
+        );
 
-      // Keyboard Actions
-      const keyboardInput = document.getElementById("keyboardInput");
-      const keyboardShiftBtn = document.getElementById("keyboardShiftBtn");
-      const keyboardOutput = document.getElementById("keyboardOutput");
-      keyboardInput.addEventListener(
-        "input",
-        () => (keyboardOutput.textContent = `Typed text: ${keyboardInput.value}`)
-      );
-      keyboardShiftBtn.addEventListener("click", () => {
-        const text = keyboardInput.value.toUpperCase();
-        keyboardInput.value = text;
-        keyboardOutput.textContent = `Shift typed: ${text}`;
-      });
-    </script>
+        /* Mouse Actions */
+        const mouseBox = document.getElementById("mouseBox");
+        const dropZone = document.getElementById("dropZone");
+        const mouseOutput = document.getElementById("mouseOutput");
+        document.getElementById("mouseMoveBtn").addEventListener("click", () => {
+          mouseOutput.textContent = "Simulate mouse.move(100,200)";
+        });
+        document.getElementById("mouseClickBtn").addEventListener("click", () => {
+          mouseOutput.textContent = "Simulate mouse.click(150,250)";
+        });
+        document.getElementById("mouseDownUpBtn").addEventListener("click", () => {
+          mouseOutput.textContent = "Simulate mouse.down() & mouse.up()";
+        });
+        document.getElementById("mouseWheelBtn").addEventListener("click", () => {
+          mouseOutput.textContent = "Simulate mouse.wheel(0,200)";
+        });
+
+        /* Drag & Drop */
+        const dragItem = document.getElementById("dragItem");
+        const dropArea = document.getElementById("dropArea");
+        const dragOutput = document.getElementById("dragOutput");
+
+        dragItem.addEventListener("mousedown", (e) => {
+          e.preventDefault();
+          let shiftX = e.clientX - dragItem.getBoundingClientRect().left;
+          let shiftY = e.clientY - dragItem.getBoundingClientRect().top;
+
+          dragItem.style.position = "absolute";
+          dragItem.style.zIndex = 1000;
+          document.body.appendChild(dragItem);
+
+          function moveAt(pageX, pageY) {
+            dragItem.style.left = pageX - shiftX + "px";
+            dragItem.style.top = pageY - shiftY + "px";
+          }
+          moveAt(e.pageX, e.pageY);
+
+          function onMouseMove(e) {
+            moveAt(e.pageX, e.pageY);
+          }
+          document.addEventListener("mousemove", onMouseMove);
+
+          dragItem.addEventListener(
+            "mouseup",
+            () => {
+              document.removeEventListener("mousemove", onMouseMove);
+              const dropRect = dropArea.getBoundingClientRect();
+              const dragRect = dragItem.getBoundingClientRect();
+              const isDroppedInside =
+                dragRect.left + dragRect.width / 2 > dropRect.left &&
+                dragRect.left + dragRect.width / 2 < dropRect.right &&
+                dragRect.top + dragRect.height / 2 > dropRect.top &&
+                dragRect.top + dragRect.height / 2 < dropRect.bottom;
+
+              dragOutput.textContent = isDroppedInside
+                ? "Drag & Drop successful!"
+                : "Drag & Drop failed: outside drop zone";
+
+              dragItem.style.position = "";
+              dragItem.style.left = "";
+              dragItem.style.top = "";
+              dragItem.style.zIndex = "";
+            },
+            { once: true }
+          );
+        });
+        dragItem.ondragstart = () => false;
+
+        /* Keyboard Actions */
+        const keyboardInput = document.getElementById("keyboardInput");
+        const keyboardOutput = document.getElementById("keyboardOutput");
+        keyboardInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            keyboardOutput.textContent = `${keyboardInput.value} + Enter pressed`;
+            e.preventDefault();
+          }
+        });
+        keyboardInput.addEventListener("input", () => {
+          keyboardOutput.textContent = keyboardInput.value;
+        });
+      </script>
+    </div>
   </body>
 </html>
