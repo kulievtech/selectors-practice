@@ -8,7 +8,6 @@
       * {
         box-sizing: border-box;
       }
-
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         background: #eef2f7;
@@ -17,12 +16,10 @@
         display: flex;
         justify-content: center;
       }
-
       .container {
         width: 100%;
         max-width: 700px;
       }
-
       h2 {
         color: #5a2d82;
         margin-top: 40px;
@@ -30,7 +27,6 @@
         font-size: 1.8rem;
         text-align: center;
       }
-
       form,
       .section {
         background: #fff;
@@ -39,14 +35,12 @@
         margin-bottom: 25px;
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
       }
-
       input,
       select,
       button,
       textarea {
         font-size: 1rem;
       }
-
       input[type="text"],
       input[type="password"],
       input[type="email"],
@@ -59,7 +53,6 @@
         border-radius: 8px;
         border: 1px solid #ccc;
       }
-
       input:focus,
       select:focus,
       textarea:focus {
@@ -67,7 +60,6 @@
         outline: none;
         box-shadow: 0 0 5px rgba(118, 75, 162, 0.3);
       }
-
       button {
         display: block;
         width: 100%;
@@ -81,36 +73,23 @@
         font-weight: bold;
         transition: 0.3s;
       }
-
       button:hover {
         background: #5a2d82;
       }
-
-      /* Checkbox alignment */
-      .checkbox-group label {
+      /* Checkbox & Radio */
+      .checkbox-group label,
+      .radio-group label {
         display: block;
         margin: 6px 0;
         cursor: pointer;
         font-weight: 500;
       }
-      .checkbox-group input[type="checkbox"] {
+      .checkbox-group input[type="checkbox"],
+      .radio-group input[type="radio"] {
         margin-right: 8px;
         vertical-align: middle;
       }
-
-      /* Radio button alignment */
-      .radio-group label {
-        display: inline-flex;
-        align-items: center;
-        margin: 6px 0;
-        cursor: pointer;
-        font-weight: 500;
-      }
-      .radio-group input[type="radio"] {
-        margin-right: 8px;
-      }
-
-      /* Toggle switch */
+      /* Toggle */
       .toggle-switch {
         position: relative;
         display: inline-block;
@@ -118,13 +97,11 @@
         height: 26px;
         margin: 10px 0;
       }
-
       .toggle-switch input {
         opacity: 0;
         width: 0;
         height: 0;
       }
-
       .slider {
         position: absolute;
         cursor: pointer;
@@ -136,7 +113,6 @@
         transition: 0.4s;
         border-radius: 26px;
       }
-
       .slider:before {
         position: absolute;
         content: "";
@@ -148,22 +124,18 @@
         transition: 0.4s;
         border-radius: 50%;
       }
-
       input:checked + .slider {
         background-color: #764ba2;
       }
-
       input:checked + .slider:before {
         transform: translateX(24px);
       }
-
-      /* Product list */
+      /* Product List */
       .product-list {
         list-style: none;
         padding: 0;
         margin: 0;
       }
-
       .product-item {
         padding: 12px;
         margin: 8px 0;
@@ -174,17 +146,19 @@
         cursor: pointer;
         transition: 0.2s;
       }
-
       .product-item.selected {
         background: #764ba2;
         color: white;
         border-color: #5a2d82;
       }
-
       .add {
         margin-top: 15px;
       }
-
+      .output {
+        margin-top: 10px;
+        font-weight: bold;
+        color: #333;
+      }
       @media (max-width: 700px) {
         form,
         .section {
@@ -199,88 +173,226 @@
       <h2>Login Form</h2>
       <form id="loginForm">
         <input id="username" type="text" placeholder="Username" />
-        <input type="password" placeholder="Password" />
+        <input type="password" id="password" placeholder="Password" />
         <select id="country">
           <option value="USA">USA</option>
           <option value="Canada">Canada</option>
+          <option value="UK">UK</option>
+          <option value="Germany">Germany</option>
         </select>
         <button type="submit">Login</button>
+        <div class="output" id="loginMessage"></div>
       </form>
 
       <!-- Buttons & Text -->
       <h2>Buttons & Text</h2>
       <div class="section">
-        <button>Welcome</button>
-        <button>Click Me</button>
+        <button id="btnWelcome">Welcome</button>
+        <button id="btnClickMe">Click Me</button>
         <p>Playwright is awesome for testing web apps!</p>
+        <div class="output" id="buttonOutput"></div>
       </div>
 
       <!-- Form with Labels -->
       <h2>Form with Labels</h2>
-      <form>
+      <form id="labelForm">
         <label for="email">Email</label>
         <input id="email" type="email" />
         <label for="pass">Password</label>
         <input id="pass" type="password" />
+        <button type="submit">Submit Form</button>
+        <div class="output" id="labelFormOutput"></div>
       </form>
 
       <!-- Search Box -->
       <h2>Search Box</h2>
       <div class="section">
-        <input type="text" placeholder="Search..." />
+        <input type="text" id="searchBox" placeholder="Search options..." />
+        <ul id="searchOptions">
+          <li>Apple</li>
+          <li>Banana</li>
+          <li>Cherry</li>
+          <li>Date</li>
+          <li>Elderberry</li>
+          <li>Fig</li>
+          <li>Grape</li>
+        </ul>
+        <div class="output" id="searchOutput"></div>
       </div>
 
       <!-- Checkboxes & Radios -->
       <h2>Checkboxes & Radio Buttons</h2>
       <div class="section">
         <div class="checkbox-group">
-          <label><input type="checkbox" /> Option 1</label>
-          <label><input type="checkbox" /> Option 2</label>
-          <label><input type="checkbox" /> Option 3</label>
+          <label><input type="checkbox" value="Option 1" /> Option 1</label>
+          <label><input type="checkbox" value="Option 2" /> Option 2</label>
+          <label><input type="checkbox" value="Option 3" /> Option 3</label>
         </div>
         <div class="radio-group">
-          <label><input type="radio" name="choice" /> Choice A</label>
-          <label><input type="radio" name="choice" /> Choice B</label>
+          <label><input type="radio" name="choice" value="A" /> Choice A</label>
+          <label><input type="radio" name="choice" value="B" /> Choice B</label>
         </div>
+        <div class="output" id="checkboxRadioOutput"></div>
       </div>
 
       <!-- Toggle Switch -->
       <h2>Toggle Switch</h2>
       <div class="section">
         <label class="toggle-switch">
-          <input type="checkbox" />
+          <input type="checkbox" id="toggleSwitch" />
           <span class="slider"></span>
         </label>
+        <div class="output" id="toggleOutput"></div>
       </div>
 
       <!-- Textarea -->
       <h2>Textarea</h2>
       <div class="section">
-        <textarea placeholder="Write something..." rows="4"></textarea>
+        <textarea id="textArea" placeholder="Write something..." rows="4"></textarea>
+        <div class="output" id="textareaOutput"></div>
       </div>
 
       <!-- Button with data-testid -->
       <h2>Button with data-testid</h2>
       <div class="section">
-        <button data-testid="submit-button">Submit</button>
+        <button data-testid="submit-button" id="testIdButton">Submit</button>
+        <div class="output" id="testIdOutput"></div>
       </div>
 
       <!-- Product List -->
       <h2>Product List</h2>
       <div class="section">
-        <ul class="product-list">
+        <input type="text" id="productSearch" placeholder="Filter products..." />
+        <ul class="product-list" id="productList">
           <li class="product-item">Laptop</li>
           <li class="product-item">Phone</li>
           <li class="product-item">Tablet</li>
+          <li class="product-item">Headphones</li>
+          <li class="product-item">Keyboard</li>
         </ul>
-        <button class="add">Add to Cart</button>
+        <div class="output" id="selectedProducts"></div>
       </div>
     </div>
 
     <script>
-      // Product selection toggle
-      document.querySelectorAll(".product-item").forEach((item) => {
-        item.addEventListener("click", () => item.classList.toggle("selected"));
+      // Login Form
+      const loginForm = document.getElementById("loginForm");
+      const loginMessage = document.getElementById("loginMessage");
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const country = document.getElementById("country").value;
+        loginMessage.textContent =
+          username && password
+            ? `Logged in as ${username} from ${country}`
+            : "Please enter username and password";
+      });
+
+      // Buttons & Text
+      const btnOutput = document.getElementById("buttonOutput");
+      document
+        .getElementById("btnWelcome")
+        .addEventListener(
+          "click",
+          () => (btnOutput.textContent = "Welcome button clicked")
+        );
+      document
+        .getElementById("btnClickMe")
+        .addEventListener(
+          "click",
+          () => (btnOutput.textContent = "Click Me button clicked")
+        );
+
+      // Form with Labels
+      const labelForm = document.getElementById("labelForm");
+      const labelFormOutput = document.getElementById("labelFormOutput");
+      labelForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = document.getElementById("email").value;
+        const pass = document.getElementById("pass").value;
+        labelFormOutput.textContent =
+          email && pass
+            ? `Form submitted with email: ${email}`
+            : "Please fill both fields";
+      });
+
+      // Search Box with dynamic options
+      const searchBox = document.getElementById("searchBox");
+      const searchOptions = Array.from(document.querySelectorAll("#searchOptions li"));
+      const searchOutput = document.getElementById("searchOutput");
+      searchBox.addEventListener("input", () => {
+        const term = searchBox.value.toLowerCase();
+        searchOptions.forEach(
+          (li) =>
+            (li.style.display = li.textContent.toLowerCase().includes(term) ? "" : "none")
+        );
+        searchOutput.textContent = term ? `Filtering options for: ${term}` : "";
+      });
+
+      // Checkbox & Radio
+      const checkboxRadioOutput = document.getElementById("checkboxRadioOutput");
+      const updateCheckboxRadioOutput = () => {
+        const checkedBoxes = Array.from(
+          document.querySelectorAll(".checkbox-group input:checked")
+        ).map((i) => i.value);
+        const checkedRadio = document.querySelector(".radio-group input:checked");
+        checkboxRadioOutput.textContent = `Checked boxes: ${
+          checkedBoxes.join(", ") || "None"
+        }, Selected radio: ${checkedRadio ? checkedRadio.value : "None"}`;
+      };
+      document
+        .querySelectorAll(".checkbox-group input, .radio-group input")
+        .forEach((i) => i.addEventListener("change", updateCheckboxRadioOutput));
+
+      // Toggle switch
+      const toggleSwitch = document.getElementById("toggleSwitch");
+      const toggleOutput = document.getElementById("toggleOutput");
+      toggleSwitch.addEventListener(
+        "change",
+        () =>
+          (toggleOutput.textContent = `Toggle is ${toggleSwitch.checked ? "ON" : "OFF"}`)
+      );
+
+      // Textarea
+      const textarea = document.getElementById("textArea");
+      const textareaOutput = document.getElementById("textareaOutput");
+      textarea.addEventListener(
+        "input",
+        () => (textareaOutput.textContent = `Typed text: ${textarea.value}`)
+      );
+
+      // Button with data-testid
+      const testIdButton = document.getElementById("testIdButton");
+      const testIdOutput = document.getElementById("testIdOutput");
+      testIdButton.addEventListener(
+        "click",
+        () => (testIdOutput.textContent = "Data-testid button clicked")
+      );
+
+      // Product list selection
+      const products = document.querySelectorAll(".product-item");
+      const selectedProducts = document.getElementById("selectedProducts");
+      products.forEach((item) =>
+        item.addEventListener("click", () => {
+          item.classList.toggle("selected");
+          const selected = Array.from(
+            document.querySelectorAll(".product-item.selected")
+          ).map((i) => i.textContent);
+          selectedProducts.textContent = selected.length
+            ? `Selected products: ${selected.join(", ")}`
+            : "No products selected";
+        })
+      );
+
+      // Product filter
+      const productSearch = document.getElementById("productSearch");
+      productSearch.addEventListener("input", () => {
+        const term = productSearch.value.toLowerCase();
+        products.forEach(
+          (p) =>
+            (p.style.display = p.textContent.toLowerCase().includes(term) ? "" : "none")
+        );
       });
     </script>
   </body>
